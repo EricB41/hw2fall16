@@ -52,10 +52,14 @@ describe "jellybean" do
   it "should have getters and setters for @name and @calories" do
     expect(JellyBean.new("hey", 2, "test").name()).to eq("hey")
     expect(JellyBean.new("hey", 201, "test").calories()).to eq(201)
+    expect(JellyBean.new("hey", 201, "test").flavor()).to eq("test")
     testJellyBean.name=("xyz")
     expect(testJellyBean.name()).to eq("xyz")
     testJellyBean.calories=(1234)
     expect(testJellyBean.calories()).to eq(1234)
+    testJellyBean.flavor=("test2")
+    expect(testJellyBean.flavor()).to eq("test2")
+    
   end
   
   it "should have method healthy? return true if dessert has less than 200 calories" do
