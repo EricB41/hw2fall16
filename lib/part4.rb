@@ -1,4 +1,4 @@
-#DISCLAIMER: Used the code for guidance: http://stackoverflow.com/questions/9561072/ruby-using-class-eval-to-define-methods
+#DISCLAIMER: Used this code for guidance: http://stackoverflow.com/questions/9561072/ruby-using-class-eval-to-define-methods
 
 
 class Class
@@ -9,7 +9,12 @@ class Class
     attr_reader attr_name+"_history" # create bar_history getter
     instance_variable_set "@#{attr_name}_history", [attr_name]
     class_eval %Q"
-      @#{attr_name}_history = []
+      def #{attr_name}_history
+        if !defined? @#{attr_name}_history
+          @#{attr_name}_history = [nil]
+        end
+        return @#{attr_name}_history
+      end
       def #{attr_name}=(newVal)
         if !defined? @#{attr_name}_history
           @#{attr_name}_history = []
@@ -31,6 +36,7 @@ class Foo
 end
 
 f = Foo.new
+print f.bar_history
 f.bar= 1
 f.bar= 2
-f.bar_history
+print f.bar_history

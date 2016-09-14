@@ -24,12 +24,22 @@
 #When you have completed all five parts of the assignment, follow the submission
 #instructions specified in the assignment description to hand-in your work.
 
+#IMPORTANT IMPLEMENTATION NOTE: The HW requirements say: "you may assume that the 
+# definition of a 'word' is: a sequence of characters whose boundaries are
+# matched by the \b construct in Ruby regexps" .  The \b character allows words
+# to include letters, numbers, and underscores so my solutions do the same.
+# However, \b does not count "'" as a word (for example, John's), but Professor Kuhl says
+# we should include it as a word.  Therefore, my code counts John's as one word
+# instead of two for count_words, but not in palindrome? because it violates the
+# known palindrome "Madam I'm Adam"
+
 def palindrome?(str)
-  return str.downcase.gsub(/[^a-z]/, "") == str.downcase.reverse.gsub(/[^a-z]/, "")
+  return str.downcase.gsub(/[\W]/, "") == str.downcase.reverse.gsub(/[\W]/, "")
 end
 
 def count_words(str)
-  strArray = str.split(/[^a-z^A-Z^']+/)
+  str = str.gsub(/[\^]/, " ")
+  strArray = str.split(/[^a-z^A-Z^0-9^_^']+/)
   strHash = Hash.new
   strArray.each do |currString|
     if strHash.key?(currString.downcase())
@@ -45,9 +55,3 @@ end
 
 #the code below this line will test your functions. 
 #You should remove everything below this line prior to submitting your file
-
-
-test_str = "The rent is due on the first day of the month unless the first day of the month falls on a Saturday or Sunday"
-
-word_count = count_words test_str
-puts word_count
