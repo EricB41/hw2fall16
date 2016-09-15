@@ -30,13 +30,4 @@ end
 class Foo
   attr_accessor_with_history :bar
   
-  def initialize()
-    
-  end
 end
-
-f = Foo.new
-print f.bar_history
-f.bar= 1
-f.bar= 2
-print f.bar_history
